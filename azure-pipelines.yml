@@ -4,18 +4,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
-- task: JFrogMaven@1
+- task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
-    goals: 'install'
-    artifactoryResolverService: 'arti-horizons'
-    targetResolveReleaseRepo: 'default-maven-virtual'
-    targetResolveSnapshotRepo: 'default-maven-virtual'
-    artifactoryDeployService: 'arti-horizons'
-    targetDeployReleaseRepo: 'ms-java-release'
-    targetDeploySnapshotRepo: 'ms-java-snapshots'
-    collectBuildInfo: true
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
-    includeEnvVars: true
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
